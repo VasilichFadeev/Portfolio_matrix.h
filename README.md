@@ -1,2 +1,9 @@
 # Portfolio_matrix.h
-Library for processing numerical matrices.
+## Library for processing numerical matrices.
+Для запуска проекта в Makefile есть следующие цели:  
+**test** - запуск программы с unit-тестами,  
+**all** - построение объектных файлов,  
+**gcov_report** - отчёт о покрытии функций тестами,  
+**clean** - удаление всех исполняемых файлов, отчётов.  
+
+Конкретные ошибки, которые находит автотест, вынес в **autotest.log**  
