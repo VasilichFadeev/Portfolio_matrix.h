@@ -227,6 +227,19 @@ START_TEST(test_eq_matrix_diff_sizes) {
 }
 END_TEST
 
+START_TEST(test_eq_matrix_matrices_null) {
+  matrix_t a = {0}, b = {0};
+  a.matrix = NULL;
+  b.matrix = NULL;
+
+  int status = s21_eq_matrix(&a, &b);
+  ck_assert_int_eq(status, 0);
+
+  s21_remove_matrix(&a);
+  s21_remove_matrix(&b);
+}
+END_TEST
+
 // Тест сравнения сложения матриц со сравнением с ожидаемым результатом
 START_TEST(test_sum_matrix_ok) {
   matrix_t a = {0}, b = {0}, result = {0}, expected = {0};
@@ -330,6 +343,75 @@ START_TEST(test_sum_different_input_and_result_sizes) {
 
   int status = s21_sum_matrix(&a, &b, &result);
   ck_assert_int_eq(status, 2);
+
+  s21_remove_matrix(&a);
+  s21_remove_matrix(&b);
+  s21_remove_matrix(&result);
+}
+END_TEST
+
+START_TEST(test_sum_result_not_initialized) {
+  matrix_t a = {0}, b = {0}, result = {0};
+
+  s21_create_matrix(5, 5, &a);
+  s21_create_matrix(5, 5, &b);
+
+  a.matrix[0][0] = 432;
+  a.matrix[0][1] = 78;
+  a.matrix[0][2] = 89;
+  a.matrix[0][3] = 112;
+  a.matrix[0][4] = 12;
+  a.matrix[1][0] = 99;
+  a.matrix[1][1] = 1248;
+  a.matrix[1][2] = 32;
+  a.matrix[1][3] = 565;
+  a.matrix[1][4] = 3232;
+  a.matrix[2][0] = 329;
+  a.matrix[2][1] = 32123;
+  a.matrix[2][2] = 88;
+  a.matrix[2][3] = 342;
+  a.matrix[2][4] = 67;
+  a.matrix[3][0] = 890;
+  a.matrix[3][1] = 84;
+  a.matrix[3][2] = 323;
+  a.matrix[3][3] = 989;
+  a.matrix[3][4] = 567;
+  a.matrix[4][0] = 321;
+  a.matrix[4][1] = 25;
+  a.matrix[4][2] = 44;
+  a.matrix[4][3] = 43;
+  a.matrix[4][4] = 889;
+
+  b.matrix[0][0] = 32;
+  b.matrix[0][1] = 566;
+  b.matrix[0][2] = 55;
+  b.matrix[0][3] = 32;
+  b.matrix[0][4] = 989;
+  b.matrix[1][0] = 151;
+  b.matrix[1][1] = 656;
+  b.matrix[1][2] = 56;
+  b.matrix[1][3] = 692;
+  b.matrix[1][4] = 987;
+  b.matrix[2][0] = 121;
+  b.matrix[2][1] = 848;
+  b.matrix[2][2] = 484;
+  b.matrix[2][3] = 3694;
+  b.matrix[2][4] = 48;
+  b.matrix[3][0] = 59;
+  b.matrix[3][1] = 559;
+  b.matrix[3][2] = 95;
+  b.matrix[3][3] = 1010;
+  b.matrix[3][4] = 95;
+  b.matrix[4][0] = 85;
+  b.matrix[4][1] = 111;
+  b.matrix[4][2] = 48;
+  b.matrix[4][3] = 1;
+  b.matrix[4][4] = 84;
+
+  result.matrix = NULL;
+
+  int status = s21_sum_matrix(&a, &b, &result);
+  ck_assert_int_eq(status, 0);
 
   s21_remove_matrix(&a);
   s21_remove_matrix(&b);
@@ -447,6 +529,75 @@ START_TEST(test_sub_different_input_and_result_sizes) {
 }
 END_TEST
 
+START_TEST(test_sub_result_not_initialized) {
+  matrix_t a = {0}, b = {0}, result = {0};
+
+  s21_create_matrix(5, 5, &a);
+  s21_create_matrix(5, 5, &b);
+
+  a.matrix[0][0] = 432;
+  a.matrix[0][1] = 78;
+  a.matrix[0][2] = 89;
+  a.matrix[0][3] = 112;
+  a.matrix[0][4] = 12;
+  a.matrix[1][0] = 99;
+  a.matrix[1][1] = 1248;
+  a.matrix[1][2] = 32;
+  a.matrix[1][3] = 565;
+  a.matrix[1][4] = 3232;
+  a.matrix[2][0] = 329;
+  a.matrix[2][1] = 32123;
+  a.matrix[2][2] = 88;
+  a.matrix[2][3] = 342;
+  a.matrix[2][4] = 67;
+  a.matrix[3][0] = 890;
+  a.matrix[3][1] = 84;
+  a.matrix[3][2] = 323;
+  a.matrix[3][3] = 989;
+  a.matrix[3][4] = 567;
+  a.matrix[4][0] = 321;
+  a.matrix[4][1] = 25;
+  a.matrix[4][2] = 44;
+  a.matrix[4][3] = 43;
+  a.matrix[4][4] = 889;
+
+  b.matrix[0][0] = 32;
+  b.matrix[0][1] = 566;
+  b.matrix[0][2] = 55;
+  b.matrix[0][3] = 32;
+  b.matrix[0][4] = 989;
+  b.matrix[1][0] = 151;
+  b.matrix[1][1] = 656;
+  b.matrix[1][2] = 56;
+  b.matrix[1][3] = 692;
+  b.matrix[1][4] = 987;
+  b.matrix[2][0] = 121;
+  b.matrix[2][1] = 848;
+  b.matrix[2][2] = 484;
+  b.matrix[2][3] = 3694;
+  b.matrix[2][4] = 48;
+  b.matrix[3][0] = 59;
+  b.matrix[3][1] = 559;
+  b.matrix[3][2] = 95;
+  b.matrix[3][3] = 1010;
+  b.matrix[3][4] = 95;
+  b.matrix[4][0] = 85;
+  b.matrix[4][1] = 111;
+  b.matrix[4][2] = 48;
+  b.matrix[4][3] = 1;
+  b.matrix[4][4] = 84;
+
+  result.matrix = NULL;
+
+  int status = s21_sub_matrix(&a, &b, &result);
+  ck_assert_int_eq(status, 0);
+
+  s21_remove_matrix(&a);
+  s21_remove_matrix(&b);
+  s21_remove_matrix(&result);
+}
+END_TEST
+
 // Успешный тест умножения матрицы на число
 START_TEST(test_mult_number_ok) {
   matrix_t a = {0}, result = {0}, expected = {0};
@@ -531,6 +682,27 @@ START_TEST(test_mult_number_null_pointers) {
   int status = s21_mult_number(&A, number, &result);
   ck_assert_int_eq(status, 1);
   s21_remove_matrix(&A);
+  s21_remove_matrix(&result);
+}
+END_TEST
+
+START_TEST(test_mult_number_result_not_initialized) {
+  matrix_t a = {0}, result = {0};
+  double number = 1.87;
+  s21_create_matrix(5, 1, &a);
+
+  a.matrix[0][0] = 1;
+  a.matrix[1][0] = 2;
+  a.matrix[2][0] = 3;
+  a.matrix[3][0] = 4;
+  a.matrix[4][0] = 5;
+
+  result.matrix = NULL;
+
+  int status = s21_mult_number(&a, number, &result);
+  ck_assert_int_eq(status, 0);
+
+  s21_remove_matrix(&a);
   s21_remove_matrix(&result);
 }
 END_TEST
@@ -1109,11 +1281,11 @@ END_TEST
 START_TEST(test_get_minor_null_pointers) {
   matrix_t A = {0}, minor = {0};
   s21_create_matrix(3, 3, &A);
-  ck_assert_int_eq(s21_get_minor(NULL, 0, 0, &minor), 1);
-  ck_assert_int_eq(s21_get_minor(&A, 0, 0, NULL), 1);
+  ck_assert_int_eq(get_minor(NULL, 0, 0, &minor), 1);
+  ck_assert_int_eq(get_minor(&A, 0, 0, NULL), 1);
   double **original_matrix = A.matrix;
   A.matrix = NULL;
-  ck_assert_int_eq(s21_get_minor(&A, 0, 0, &minor), 1);
+  ck_assert_int_eq(get_minor(&A, 0, 0, &minor), 1);
   A.matrix = original_matrix;
   s21_remove_matrix(&A);
   s21_remove_matrix(&minor);
@@ -1124,7 +1296,7 @@ END_TEST
 START_TEST(test_get_minor_small_matrix) {
   matrix_t A = {0}, minor = {0};
   s21_create_matrix(1, 1, &A);
-  ck_assert_int_eq(s21_get_minor(&A, 0, 0, &minor), 1);
+  ck_assert_int_eq(get_minor(&A, 0, 0, &minor), 1);
   s21_remove_matrix(&A);
   s21_remove_matrix(&minor);
 }
@@ -1134,10 +1306,10 @@ END_TEST
 START_TEST(test_get_minor_invalid_indices) {
   matrix_t A = {0}, minor = {0};
   s21_create_matrix(3, 3, &A);
-  ck_assert_int_eq(s21_get_minor(&A, -1, 0, &minor), 1);
-  ck_assert_int_eq(s21_get_minor(&A, 0, -1, &minor), 1);
-  ck_assert_int_eq(s21_get_minor(&A, 3, 0, &minor), 1);
-  ck_assert_int_eq(s21_get_minor(&A, 0, 3, &minor), 1);
+  ck_assert_int_eq(get_minor(&A, -1, 0, &minor), 1);
+  ck_assert_int_eq(get_minor(&A, 0, -1, &minor), 1);
+  ck_assert_int_eq(get_minor(&A, 3, 0, &minor), 1);
+  ck_assert_int_eq(get_minor(&A, 0, 3, &minor), 1);
   s21_remove_matrix(&A);
   s21_remove_matrix(&minor);
 }
@@ -1149,7 +1321,7 @@ START_TEST(test_get_minor_create_fail) {
   s21_create_matrix(3, 3, &A);
   int original_rows = A.rows;
   A.rows = 1;
-  ck_assert_int_eq(s21_get_minor(&A, 0, 0, &minor), 1);
+  ck_assert_int_eq(get_minor(&A, 0, 0, &minor), 1);
   A.rows = original_rows;
   s21_remove_matrix(&A);
   s21_remove_matrix(&minor);
@@ -1282,6 +1454,31 @@ START_TEST(test_inverse_memory_fail) {
 }
 END_TEST
 
+START_TEST(test_inverse_matrix_calc_complements_fail) {
+  matrix_t A = {0};
+  matrix_t result = {0};
+
+  // Создаем некорректную матрицу (например, с NaN), чтобы s21_calc_complements
+  // завершился ошибкой
+  s21_create_matrix(2, 2, &A);
+  A.matrix[0][0] = NAN;  // Это вызовет ошибку в calc_complements
+  A.matrix[0][1] = 1;
+  A.matrix[1][0] = 2;
+  A.matrix[1][1] = 3;
+
+  int status = s21_inverse_matrix(&A, &result);
+  ck_assert_int_eq(status, INVALID_MATRIX);  // Проверяем, что вернулась ошибка
+
+  // Проверяем, что result не был изменен (остался нулевым)
+  ck_assert_ptr_null(result.matrix);
+  ck_assert_int_eq(result.rows, 0);
+  ck_assert_int_eq(result.columns, 0);
+
+  s21_remove_matrix(&A);
+  s21_remove_matrix(&result);
+}
+END_TEST
+
 Suite *s21_matrix_suite(void) {
   Suite *s = suite_create("s21_matrix");
   TCase *tc_core = tcase_create("Core");
@@ -1298,18 +1495,22 @@ Suite *s21_matrix_suite(void) {
   tcase_add_test(tc_core, test_eq_matrix_fraction_higher_ok);
   tcase_add_test(tc_core, test_eq_matrix_fraction_higher_fail);
   tcase_add_test(tc_core, test_eq_matrix_diff_sizes);
+  tcase_add_test(tc_core, test_eq_matrix_matrices_null);
   tcase_add_test(tc_core, test_sum_matrix_ok);
   tcase_add_test(tc_core, test_sum_number_null_pointers);
   tcase_add_test(tc_core, test_sum_different_sizes);
   tcase_add_test(tc_core, test_sum_different_input_and_result_sizes);
+  tcase_add_test(tc_core, test_sum_result_not_initialized);
   tcase_add_test(tc_core, test_sub_matrix_ok);
   tcase_add_test(tc_core, test_sub_number_null_pointers);
   tcase_add_test(tc_core, test_sub_different_sizes);
   tcase_add_test(tc_core, test_sub_different_input_and_result_sizes);
+  tcase_add_test(tc_core, test_sub_result_not_initialized);
   tcase_add_test(tc_core, test_mult_number_ok);
   tcase_add_test(tc_core, test_mult_number_wrong_sizes);
   tcase_add_test(tc_core, test_mult_number_create_fail);
   tcase_add_test(tc_core, test_mult_number_null_pointers);
+  tcase_add_test(tc_core, test_mult_number_result_not_initialized);
   tcase_add_test(tc_core, test_mult_matrix_ok);
   tcase_add_test(tc_core, test_mult_matrix_null_pointers);
   tcase_add_test(tc_core, test_mult_matrix_wrong_sizes);
@@ -1347,6 +1548,7 @@ Suite *s21_matrix_suite(void) {
   tcase_add_test(tc_core, test_inverse_null_pointers);
   tcase_add_test(tc_core, test_inverse_1x1);
   tcase_add_test(tc_core, test_inverse_memory_fail);
+  tcase_add_test(tc_core, test_inverse_matrix_calc_complements_fail);
 
   suite_add_tcase(s, tc_core);
   return s;
